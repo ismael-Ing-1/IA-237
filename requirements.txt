@@ -1,0 +1,6 @@
+# Runtime dependencies
+pydantic==2.13.5
+networkx==3.7
+
+# Tests
+pytest==9.1.1
