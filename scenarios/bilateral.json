@@ -1,0 +1,144 @@
+{
+  "name": "bilateral_exchange",
+  "description": "Simple direct exchange between Alice and Bob.",
+
+  "start_time": "2026-09-26T09:00:00+00:00",
+
+  "users": [
+    {
+      "id": "alice",
+      "name": "Alice",
+
+      "resources": [
+        {
+          "id": "alice-storage",
+          "resource_type": "STORAGE",
+          "quantity": 40,
+          "unit": "TB-day",
+          "attributes": {
+            "region": "eu-west"
+          }
+        }
+      ],
+
+      "needs": [
+        {
+          "id": "alice-h100-need",
+          "resource_type": "H100",
+          "quantity": 8,
+          "unit": "gpu-hour",
+          "attributes": {
+            "minimum_vram_gb": 80
+          }
+        }
+      ],
+
+      "preferred_partners": [
+        "bob"
+      ],
+
+      "blocked_partners": [],
+
+      "strategy": "balanced",
+
+      "constraints": {
+        "minimum_reputation": 0.0,
+        "max_negotiation_rounds": 10,
+
+        "max_quantity_to_give": {
+          "STORAGE": 15
+        },
+
+        "require_human_approval": true,
+        "reveal_exact_inventory": false,
+        "additional_constraints": {}
+      },
+
+      "online": true
+    },
+
+    {
+      "id": "bob",
+      "name": "Bob",
+
+      "resources": [
+        {
+          "id": "bob-h100",
+          "resource_type": "H100",
+          "quantity": 16,
+          "unit": "gpu-hour",
+          "attributes": {
+            "vram_gb": 80,
+            "region": "eu-west"
+          }
+        }
+      ],
+
+      "needs": [
+        {
+          "id": "bob-storage-need",
+          "resource_type": "STORAGE",
+          "quantity": 10,
+          "unit": "TB-day"
+        }
+      ],
+
+      "preferred_partners": [],
+
+      "blocked_partners": [],
+
+      "strategy": "balanced",
+
+      "constraints": {
+        "minimum_reputation": 0.0,
+        "max_negotiation_rounds": 10,
+
+        "max_quantity_to_give": {
+          "H100": 10
+        },
+
+        "require_human_approval": true,
+        "reveal_exact_inventory": false,
+        "additional_constraints": {}
+      },
+
+      "online": true
+    }
+  ],
+
+  "goal": {
+    "user_id": "alice",
+
+    "request": {
+      "resource_type": "H100",
+      "quantity": 8,
+      "unit": "gpu-hour",
+      "attributes": {
+        "minimum_vram_gb": 80
+      }
+    },
+
+    "offered_resources": [
+      {
+        "resource_type": "STORAGE",
+        "quantity": 10,
+        "unit": "TB-day"
+      }
+    ]
+  },
+
+  "demo": {
+    "expected_result": "direct_exchange",
+
+    "steps": [
+      "Alice asks her agent for 8 H100 GPU-hours.",
+      "AliceAgent searches the marketplace.",
+      "Bob is discovered as an H100 provider.",
+      "AliceAgent proposes 10 TB-day of storage.",
+      "BobAgent verifies that the offer satisfies Bob's needs.",
+      "BobAgent accepts.",
+      "The deal waits for human approval.",
+      "After approval, the exchange is executed."
+    ]
+  }
+}

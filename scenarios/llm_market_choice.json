@@ -1,0 +1,220 @@
+{
+  "name": "llm_market_choice",
+  "description": "Open-ended provider-choice test: the highest-reputation providers do not publicly request Alice's STORAGE, while a lower-reputation provider does. No result is prescribed.",
+  "start_time": "2026-09-27T19:00:00+00:00",
+  "users": [
+    {
+      "id": "alice",
+      "name": "Alice",
+      "resources": [
+        {
+          "id": "alice-storage",
+          "resource_type": "STORAGE",
+          "quantity": 45,
+          "unit": "TB-day",
+          "attributes": {}
+        }
+      ],
+      "needs": [
+        {
+          "id": "alice-h100",
+          "resource_type": "H100",
+          "quantity": 6,
+          "unit": "gpu-hour",
+          "attributes": {}
+        }
+      ],
+      "preferred_partners": [],
+      "blocked_partners": [],
+      "strategy": "balanced",
+      "constraints": {
+        "minimum_reputation": 0.45,
+        "max_negotiation_rounds": 12,
+        "max_quantity_to_give": {
+          "STORAGE": 18
+        },
+        "require_human_approval": true,
+        "reveal_exact_inventory": false,
+        "additional_constraints": {}
+      },
+      "online": true
+    },
+    {
+      "id": "bob",
+      "name": "Bob Premium",
+      "resources": [
+        {
+          "id": "bob-h100",
+          "resource_type": "H100",
+          "quantity": 20,
+          "unit": "gpu-hour",
+          "attributes": {}
+        },
+        {
+          "id": "bob-a100",
+          "resource_type": "A100",
+          "quantity": 4,
+          "unit": "gpu-hour",
+          "attributes": {}
+        }
+      ],
+      "needs": [
+        {
+          "id": "bob-a100-need",
+          "resource_type": "A100",
+          "quantity": 5,
+          "unit": "gpu-hour",
+          "attributes": {}
+        }
+      ],
+      "preferred_partners": [],
+      "blocked_partners": [],
+      "strategy": "conservative",
+      "constraints": {
+        "minimum_reputation": 0.0,
+        "max_negotiation_rounds": 12,
+        "max_quantity_to_give": {
+          "H100": 9,
+          "A100": 4
+        },
+        "require_human_approval": true,
+        "reveal_exact_inventory": false,
+        "additional_constraints": {}
+      },
+      "online": true
+    },
+    {
+      "id": "david",
+      "name": "David Flexible",
+      "resources": [
+        {
+          "id": "david-h100",
+          "resource_type": "H100",
+          "quantity": 12,
+          "unit": "gpu-hour",
+          "attributes": {}
+        }
+      ],
+      "needs": [
+        {
+          "id": "david-storage",
+          "resource_type": "STORAGE",
+          "quantity": 9,
+          "unit": "TB-day",
+          "attributes": {}
+        }
+      ],
+      "preferred_partners": [],
+      "blocked_partners": [],
+      "strategy": "balanced",
+      "constraints": {
+        "minimum_reputation": 0.0,
+        "max_negotiation_rounds": 12,
+        "max_quantity_to_give": {
+          "H100": 7
+        },
+        "require_human_approval": true,
+        "reveal_exact_inventory": false,
+        "additional_constraints": {}
+      },
+      "online": true
+    },
+    {
+      "id": "emma",
+      "name": "Emma Compute",
+      "resources": [
+        {
+          "id": "emma-h100",
+          "resource_type": "H100",
+          "quantity": 14,
+          "unit": "gpu-hour",
+          "attributes": {}
+        },
+        {
+          "id": "emma-cpu",
+          "resource_type": "CPU",
+          "quantity": 100,
+          "unit": "cpu-hour",
+          "attributes": {}
+        }
+      ],
+      "needs": [
+        {
+          "id": "emma-cpu-need",
+          "resource_type": "CPU",
+          "quantity": 50,
+          "unit": "cpu-hour",
+          "attributes": {}
+        }
+      ],
+      "preferred_partners": [],
+      "blocked_partners": [],
+      "strategy": "aggressive",
+      "constraints": {
+        "minimum_reputation": 0.0,
+        "max_negotiation_rounds": 12,
+        "max_quantity_to_give": {
+          "H100": 8,
+          "CPU": 80
+        },
+        "require_human_approval": true,
+        "reveal_exact_inventory": false,
+        "additional_constraints": {}
+      },
+      "online": true
+    }
+  ],
+  "reputation_seed": {
+    "alice": {
+      "successful_transactions": 5,
+      "failed_transactions": 0,
+      "cancelled_transactions": 0,
+      "delivered_on_time": 5,
+      "delivered_late": 0
+    },
+    "bob": {
+      "successful_transactions": 14,
+      "failed_transactions": 0,
+      "cancelled_transactions": 0,
+      "delivered_on_time": 14,
+      "delivered_late": 0
+    },
+    "david": {
+      "successful_transactions": 6,
+      "failed_transactions": 2,
+      "cancelled_transactions": 0,
+      "delivered_on_time": 6,
+      "delivered_late": 2
+    },
+    "emma": {
+      "successful_transactions": 9,
+      "failed_transactions": 1,
+      "cancelled_transactions": 0,
+      "delivered_on_time": 8,
+      "delivered_late": 2
+    }
+  },
+  "goal": {
+    "user_id": "alice",
+    "request": {
+      "id": "alice-h100",
+      "resource_type": "H100",
+      "quantity": 6,
+      "unit": "gpu-hour",
+      "attributes": {}
+    },
+    "offered_resources": [
+      {
+        "resource_type": "STORAGE",
+        "quantity": 15,
+        "unit": "TB-day",
+        "attributes": {}
+      }
+    ],
+    "message": "Choose a provider using public compatibility, reputation and the current strategy, then negotiate."
+  },
+  "demo": {
+    "purpose": "llm_provider_reasoning",
+    "note": "No provider is forced by the scenario. The outcome is whatever the active agents reach under their policies."
+  }
+}

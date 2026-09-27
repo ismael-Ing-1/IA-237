@@ -1,0 +1,15 @@
+__pycache__/
+*.py[cod]
+.pytest_cache/
+
+.venv/
+venv/
+hackathon_venv/
+
+.env
+.env.*
+
+# Frontend
+frontend/node_modules/
+frontend/dist/
+frontend/.cursor/

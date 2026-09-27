@@ -1,0 +1,220 @@
+{
+  "name": "private_negotiation",
+  "description": "Negotiation requiring counter-offers, privacy protection and mediation, with David remaining an eligible lower-reputation fallback after Bob.",
+  "start_time": "2026-09-26T10:00:00+00:00",
+  "users": [
+    {
+      "id": "alice",
+      "name": "Alice",
+      "resources": [
+        {
+          "id": "alice-storage",
+          "resource_type": "STORAGE",
+          "quantity": 50,
+          "unit": "TB-day"
+        }
+      ],
+      "needs": [
+        {
+          "id": "alice-h100-need",
+          "resource_type": "H100",
+          "quantity": 8,
+          "unit": "gpu-hour"
+        }
+      ],
+      "preferred_partners": [
+        "bob",
+        "david"
+      ],
+      "blocked_partners": [],
+      "strategy": "conservative",
+      "constraints": {
+        "minimum_reputation": 0.5,
+        "max_negotiation_rounds": 8,
+        "max_quantity_to_give": {
+          "STORAGE": 20
+        },
+        "require_human_approval": true,
+        "reveal_exact_inventory": false,
+        "additional_constraints": {
+          "internal_priority": "critical",
+          "maximum_budget": 300
+        }
+      },
+      "online": true
+    },
+    {
+      "id": "bob",
+      "name": "Bob",
+      "resources": [
+        {
+          "id": "bob-h100",
+          "resource_type": "H100",
+          "quantity": 20,
+          "unit": "gpu-hour"
+        }
+      ],
+      "needs": [
+        {
+          "id": "bob-storage-need",
+          "resource_type": "STORAGE",
+          "quantity": 10,
+          "unit": "TB-day"
+        }
+      ],
+      "preferred_partners": [],
+      "blocked_partners": [],
+      "strategy": "aggressive",
+      "constraints": {
+        "minimum_reputation": 0.0,
+        "max_negotiation_rounds": 8,
+        "max_quantity_to_give": {
+          "H100": 10
+        },
+        "require_human_approval": true,
+        "reveal_exact_inventory": false,
+        "additional_constraints": {}
+      },
+      "online": true
+    },
+    {
+      "id": "david",
+      "name": "David",
+      "resources": [
+        {
+          "id": "david-h100",
+          "resource_type": "H100",
+          "quantity": 12,
+          "unit": "gpu-hour"
+        }
+      ],
+      "needs": [
+        {
+          "id": "david-storage-need",
+          "resource_type": "STORAGE",
+          "quantity": 18,
+          "unit": "TB-day"
+        }
+      ],
+      "preferred_partners": [],
+      "blocked_partners": [],
+      "strategy": "fast",
+      "constraints": {
+        "minimum_reputation": 0.0,
+        "max_negotiation_rounds": 5,
+        "max_quantity_to_give": {
+          "H100": 8
+        },
+        "require_human_approval": true,
+        "reveal_exact_inventory": false,
+        "additional_constraints": {}
+      },
+      "online": true
+    }
+  ],
+  "reputation_seed": {
+    "alice": {
+      "successful_transactions": 5,
+      "failed_transactions": 0,
+      "cancelled_transactions": 0,
+      "delivered_on_time": 5,
+      "delivered_late": 0
+    },
+    "bob": {
+      "successful_transactions": 9,
+      "failed_transactions": 1,
+      "cancelled_transactions": 0,
+      "delivered_on_time": 8,
+      "delivered_late": 1
+    },
+    "david": {
+      "successful_transactions": 2,
+      "failed_transactions": 2,
+      "cancelled_transactions": 1,
+      "delivered_on_time": 1,
+      "delivered_late": 1
+    }
+  },
+  "goal": {
+    "user_id": "alice",
+    "request": {
+      "resource_type": "H100",
+      "quantity": 8,
+      "unit": "gpu-hour"
+    },
+    "offered_resources": [
+      {
+        "resource_type": "STORAGE",
+        "quantity": 10,
+        "unit": "TB-day"
+      }
+    ]
+  },
+  "seed_negotiation": {
+    "participants": [
+      "alice",
+      "bob"
+    ],
+    "offers": [
+      {
+        "sender_id": "alice",
+        "receiver_id": "bob",
+        "offered_resources": [
+          {
+            "resource_type": "STORAGE",
+            "quantity": 10,
+            "unit": "TB-day"
+          }
+        ],
+        "requested_resources": [
+          {
+            "resource_type": "H100",
+            "quantity": 8,
+            "unit": "gpu-hour"
+          }
+        ],
+        "message": "I can offer 10 STORAGE for 8 H100."
+      },
+      {
+        "sender_id": "bob",
+        "receiver_id": "alice",
+        "offered_resources": [
+          {
+            "resource_type": "H100",
+            "quantity": 8,
+            "unit": "gpu-hour"
+          }
+        ],
+        "requested_resources": [
+          {
+            "resource_type": "STORAGE",
+            "quantity": 16,
+            "unit": "TB-day"
+          }
+        ],
+        "message": "I can provide 8 H100 if you provide 16 STORAGE."
+      }
+    ],
+    "max_rounds": 8
+  },
+  "privacy_demo": {
+    "unsafe_message": "I own 50 STORAGE and my maximum STORAGE offer is 20.",
+    "expected_sanitized_message": "I own [PRIVATE] STORAGE and my maximum STORAGE offer is [PRIVATE]."
+  },
+  "demo": {
+    "expected_result": "mediated_negotiation",
+    "steps": [
+      "Alice searches for an H100 provider.",
+      "Bob and David are both eligible; Bob is preferred and has stronger reputation.",
+      "Alice negotiates with Bob first.",
+      "Bob and Alice exchange strategy-driven counter-offers.",
+      "Private constraints remain hidden.",
+      "MediatorAgent may intervene after repeated public counter-offers.",
+      "If the human rejects the Bob deal, Bob is notified and that deal stays closed.",
+      "AliceAgent resumes the SAME objective and searches an untried provider.",
+      "David is then selected as the fallback H100 provider.",
+      "Alice and David negotiate independently under their own strategies and private constraints.",
+      "Only after all bilateral alternatives fail does coalition discovery run."
+    ]
+  }
+}

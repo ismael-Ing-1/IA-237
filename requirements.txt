@@ -1,0 +1,56 @@
+# Compute Exchange Network
+# Complete backend + realtime + LLM + test dependencies
+#
+# Recommended Python: 3.13
+#
+# Install from the project root:
+#   python -m pip install -r requirements.txt
+#
+# Frontend dependencies are managed separately with npm:
+#   cd frontend
+#   npm install
+
+# ============================================================
+# API / backend
+# ============================================================
+
+fastapi>=0.104.0,<1
+uvicorn[standard]>=0.24.0,<1
+pydantic==2.13.5
+
+# ============================================================
+# Marketplace / graph algorithms
+# ============================================================
+
+networkx==3.7
+
+# ============================================================
+# Realtime WebSocket support
+# ============================================================
+#
+# uvicorn[standard] already installs a WebSocket implementation,
+# but we keep this explicit because the project depends directly
+# on WebSocket support and the realtime layer was developed/tested
+# against this compatibility range.
+
+websockets>=12,<17
+
+# ============================================================
+# LLM / OpenAI integration
+# ============================================================
+
+openai>=2.0.0,<4
+
+# ============================================================
+# HTTP / integration tests
+# ============================================================
+#
+# Used by FastAPI / Starlette TestClient and project tests.
+
+httpx>=0.27,<1
+
+# ============================================================
+# Tests
+# ============================================================
+
+pytest>=8,<10

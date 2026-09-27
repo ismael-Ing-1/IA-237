@@ -1,0 +1,133 @@
+/*
+ * React Flow overrides.
+ *
+ * Keep these here instead of scattering !important styles
+ * across feature components.
+ */
+
+.react-flow {
+  background:
+    rgb(var(--cx-bg));
+}
+
+
+.react-flow__background {
+  opacity:
+    0.8;
+}
+
+
+.react-flow__controls {
+  overflow:
+    hidden;
+
+  border:
+    1px solid
+    rgb(var(--cx-border));
+
+  border-radius:
+    var(--cx-radius-md);
+
+  background:
+    rgb(
+      var(--cx-panel)
+      / 0.9
+    );
+
+  box-shadow:
+    var(--cx-shadow-panel);
+}
+
+
+.react-flow__controls-button {
+  border-bottom:
+    1px solid
+    rgb(var(--cx-border));
+
+  background:
+    transparent;
+
+  color:
+    rgb(var(--cx-text-muted));
+}
+
+
+.react-flow__controls-button:hover {
+  background:
+    rgb(
+      var(--cx-panel-soft)
+      / 0.9
+    );
+
+  color:
+    rgb(var(--cx-text));
+}
+
+
+.react-flow__controls-button svg {
+  fill:
+    currentColor;
+}
+
+
+.react-flow__minimap {
+  border:
+    1px solid
+    rgb(var(--cx-border));
+
+  border-radius:
+    var(--cx-radius-md);
+
+  background:
+    rgb(
+      var(--cx-panel)
+      / 0.92
+    );
+}
+
+
+.react-flow__attribution {
+  background:
+    rgb(
+      var(--cx-panel)
+      / 0.75
+    ) !important;
+
+  color:
+    rgb(
+      var(--cx-text-dim)
+    ) !important;
+}
+
+
+.react-flow__attribution a {
+  color:
+    rgb(
+      var(--cx-text-muted)
+    ) !important;
+}
+
+
+.react-flow__edge-path {
+  transition:
+    stroke
+    var(--cx-duration-fast)
+    ease,
+    stroke-width
+    var(--cx-duration-fast)
+    ease;
+}
+
+
+.react-flow__node {
+  transition:
+    filter
+    var(--cx-duration-fast)
+    ease;
+}
+
+
+.react-flow__node:hover {
+  filter:
+    brightness(1.06);
+}

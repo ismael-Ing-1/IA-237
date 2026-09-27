@@ -1,0 +1,141 @@
+@keyframes cx-pulse-soft {
+  0%,
+  100% {
+    opacity: 0.55;
+    transform: scale(1);
+  }
+
+  50% {
+    opacity: 1;
+    transform: scale(1.05);
+  }
+}
+
+
+@keyframes cx-ring {
+  0% {
+    box-shadow:
+      0 0 0 0 rgb(34 211 238 / 0.35);
+  }
+
+  100% {
+    box-shadow:
+      0 0 0 14px rgb(34 211 238 / 0);
+  }
+}
+
+
+@keyframes cx-slide-up {
+  from {
+    opacity: 0;
+    transform: translateY(8px);
+  }
+
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+
+@keyframes cx-fade-in {
+  from {
+    opacity: 0;
+  }
+
+  to {
+    opacity: 1;
+  }
+}
+
+
+@keyframes cx-shimmer {
+  0% {
+    background-position:
+      -200% 0;
+  }
+
+  100% {
+    background-position:
+      200% 0;
+  }
+}
+
+
+@keyframes cx-edge-flow {
+  from {
+    stroke-dashoffset: 24;
+  }
+
+  to {
+    stroke-dashoffset: 0;
+  }
+}
+
+
+.cx-animate-pulse-soft {
+  animation:
+    cx-pulse-soft
+    1.8s
+    ease-in-out
+    infinite;
+}
+
+
+.cx-animate-ring {
+  animation:
+    cx-ring
+    1.7s
+    ease-out
+    infinite;
+}
+
+
+.cx-animate-slide-up {
+  animation:
+    cx-slide-up
+    var(--cx-duration-normal)
+    var(--cx-ease-standard)
+    both;
+}
+
+
+.cx-animate-fade-in {
+  animation:
+    cx-fade-in
+    var(--cx-duration-normal)
+    ease-out
+    both;
+}
+
+
+.cx-skeleton {
+  background:
+    linear-gradient(
+      90deg,
+      rgb(30 41 59) 25%,
+      rgb(51 65 85) 50%,
+      rgb(30 41 59) 75%
+    );
+
+  background-size:
+    200% 100%;
+
+  animation:
+    cx-shimmer
+    1.6s
+    linear
+    infinite;
+}
+
+
+.cx-edge-flow {
+  stroke-dasharray:
+    8 8;
+
+  animation:
+    cx-edge-flow
+    0.9s
+    linear
+    infinite;
+}

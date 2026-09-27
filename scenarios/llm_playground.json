@@ -1,0 +1,204 @@
+{
+  "name": "llm_playground",
+  "description": "Open-ended multi-provider market. No seeded negotiation and no expected outcome: the active LLM chooses the provider and every bilateral proposal from locally-safe options.",
+  "start_time": "2026-09-27T18:00:00+00:00",
+  "users": [
+    {
+      "id": "alice",
+      "name": "Alice",
+      "resources": [
+        {
+          "id": "alice-storage",
+          "resource_type": "STORAGE",
+          "quantity": 50,
+          "unit": "TB-day",
+          "attributes": {}
+        }
+      ],
+      "needs": [
+        {
+          "id": "alice-h100",
+          "resource_type": "H100",
+          "quantity": 8,
+          "unit": "gpu-hour",
+          "attributes": {}
+        }
+      ],
+      "preferred_partners": [],
+      "blocked_partners": [],
+      "strategy": "balanced",
+      "constraints": {
+        "minimum_reputation": 0.5,
+        "max_negotiation_rounds": 12,
+        "max_quantity_to_give": {
+          "STORAGE": 20
+        },
+        "require_human_approval": true,
+        "reveal_exact_inventory": false,
+        "additional_constraints": {}
+      },
+      "online": true
+    },
+    {
+      "id": "bob",
+      "name": "Bob",
+      "resources": [
+        {
+          "id": "bob-h100",
+          "resource_type": "H100",
+          "quantity": 18,
+          "unit": "gpu-hour",
+          "attributes": {}
+        }
+      ],
+      "needs": [
+        {
+          "id": "bob-storage",
+          "resource_type": "STORAGE",
+          "quantity": 14,
+          "unit": "TB-day",
+          "attributes": {}
+        }
+      ],
+      "preferred_partners": [],
+      "blocked_partners": [],
+      "strategy": "conservative",
+      "constraints": {
+        "minimum_reputation": 0.0,
+        "max_negotiation_rounds": 12,
+        "max_quantity_to_give": {
+          "H100": 9
+        },
+        "require_human_approval": true,
+        "reveal_exact_inventory": false,
+        "additional_constraints": {}
+      },
+      "online": true
+    },
+    {
+      "id": "david",
+      "name": "David",
+      "resources": [
+        {
+          "id": "david-h100",
+          "resource_type": "H100",
+          "quantity": 14,
+          "unit": "gpu-hour",
+          "attributes": {}
+        }
+      ],
+      "needs": [
+        {
+          "id": "david-storage",
+          "resource_type": "STORAGE",
+          "quantity": 10,
+          "unit": "TB-day",
+          "attributes": {}
+        }
+      ],
+      "preferred_partners": [],
+      "blocked_partners": [],
+      "strategy": "aggressive",
+      "constraints": {
+        "minimum_reputation": 0.0,
+        "max_negotiation_rounds": 12,
+        "max_quantity_to_give": {
+          "H100": 8
+        },
+        "require_human_approval": true,
+        "reveal_exact_inventory": false,
+        "additional_constraints": {}
+      },
+      "online": true
+    },
+    {
+      "id": "emma",
+      "name": "Emma",
+      "resources": [
+        {
+          "id": "emma-h100",
+          "resource_type": "H100",
+          "quantity": 20,
+          "unit": "gpu-hour",
+          "attributes": {}
+        }
+      ],
+      "needs": [
+        {
+          "id": "emma-storage",
+          "resource_type": "STORAGE",
+          "quantity": 12,
+          "unit": "TB-day",
+          "attributes": {}
+        }
+      ],
+      "preferred_partners": [],
+      "blocked_partners": [],
+      "strategy": "balanced",
+      "constraints": {
+        "minimum_reputation": 0.0,
+        "max_negotiation_rounds": 12,
+        "max_quantity_to_give": {
+          "H100": 10
+        },
+        "require_human_approval": true,
+        "reveal_exact_inventory": false,
+        "additional_constraints": {}
+      },
+      "online": true
+    }
+  ],
+  "reputation_seed": {
+    "alice": {
+      "successful_transactions": 6,
+      "failed_transactions": 0,
+      "cancelled_transactions": 0,
+      "delivered_on_time": 6,
+      "delivered_late": 0
+    },
+    "bob": {
+      "successful_transactions": 9,
+      "failed_transactions": 1,
+      "cancelled_transactions": 0,
+      "delivered_on_time": 9,
+      "delivered_late": 1
+    },
+    "david": {
+      "successful_transactions": 5,
+      "failed_transactions": 1,
+      "cancelled_transactions": 0,
+      "delivered_on_time": 5,
+      "delivered_late": 1
+    },
+    "emma": {
+      "successful_transactions": 7,
+      "failed_transactions": 1,
+      "cancelled_transactions": 0,
+      "delivered_on_time": 7,
+      "delivered_late": 1
+    }
+  },
+  "goal": {
+    "user_id": "alice",
+    "request": {
+      "id": "alice-h100",
+      "resource_type": "H100",
+      "quantity": 8,
+      "unit": "gpu-hour",
+      "attributes": {}
+    },
+    "offered_resources": [
+      {
+        "resource_type": "STORAGE",
+        "quantity": 18,
+        "unit": "TB-day",
+        "attributes": {}
+      }
+    ],
+    "message": "Negotiate a safe H100 deal. You may choose the provider and public proposal sequence."
+  },
+  "demo": {
+    "purpose": "open_ended_llm_negotiation",
+    "note": "There is intentionally no expected_result. Different safe negotiation paths are acceptable."
+  }
+}

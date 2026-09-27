@@ -1,0 +1,211 @@
+{
+  "name": "three_agent_coalition",
+  "description": "Direct bilateral exchange fails, then a three-party coalition is privately validated, individually approved by humans, and executed atomically.",
+  "start_time": "2026-09-26T11:00:00+00:00",
+  "users": [
+    {
+      "id": "alice",
+      "name": "Alice",
+      "resources": [
+        {
+          "id": "alice-storage",
+          "resource_type": "STORAGE",
+          "quantity": 40,
+          "unit": "TB-day"
+        }
+      ],
+      "needs": [
+        {
+          "id": "alice-h100-need",
+          "resource_type": "H100",
+          "quantity": 8,
+          "unit": "gpu-hour"
+        }
+      ],
+      "preferred_partners": [
+        "bob"
+      ],
+      "blocked_partners": [],
+      "strategy": "balanced",
+      "constraints": {
+        "minimum_reputation": 0.5,
+        "max_negotiation_rounds": 10,
+        "max_quantity_to_give": {
+          "STORAGE": 15
+        },
+        "require_human_approval": true,
+        "reveal_exact_inventory": false,
+        "additional_constraints": {}
+      },
+      "online": true
+    },
+    {
+      "id": "bob",
+      "name": "Bob",
+      "resources": [
+        {
+          "id": "bob-h100",
+          "resource_type": "H100",
+          "quantity": 16,
+          "unit": "gpu-hour"
+        }
+      ],
+      "needs": [
+        {
+          "id": "bob-a100-need",
+          "resource_type": "A100",
+          "quantity": 5,
+          "unit": "gpu-hour"
+        }
+      ],
+      "preferred_partners": [],
+      "blocked_partners": [],
+      "strategy": "balanced",
+      "constraints": {
+        "minimum_reputation": 0.4,
+        "max_negotiation_rounds": 10,
+        "max_quantity_to_give": {
+          "H100": 10
+        },
+        "require_human_approval": true,
+        "reveal_exact_inventory": false,
+        "additional_constraints": {}
+      },
+      "online": true
+    },
+    {
+      "id": "charlie",
+      "name": "Charlie",
+      "resources": [
+        {
+          "id": "charlie-a100",
+          "resource_type": "A100",
+          "quantity": 10,
+          "unit": "gpu-hour"
+        }
+      ],
+      "needs": [
+        {
+          "id": "charlie-storage-need",
+          "resource_type": "STORAGE",
+          "quantity": 10,
+          "unit": "TB-day"
+        }
+      ],
+      "preferred_partners": [],
+      "blocked_partners": [],
+      "strategy": "fast",
+      "constraints": {
+        "minimum_reputation": 0.3,
+        "max_negotiation_rounds": 10,
+        "max_quantity_to_give": {
+          "A100": 6
+        },
+        "require_human_approval": true,
+        "reveal_exact_inventory": false,
+        "additional_constraints": {}
+      },
+      "online": true
+    }
+  ],
+  "reputation_seed": {
+    "alice": {
+      "successful_transactions": 6,
+      "failed_transactions": 0,
+      "cancelled_transactions": 0,
+      "delivered_on_time": 6,
+      "delivered_late": 0
+    },
+    "bob": {
+      "successful_transactions": 8,
+      "failed_transactions": 1,
+      "cancelled_transactions": 0,
+      "delivered_on_time": 7,
+      "delivered_late": 1
+    },
+    "charlie": {
+      "successful_transactions": 4,
+      "failed_transactions": 0,
+      "cancelled_transactions": 0,
+      "delivered_on_time": 4,
+      "delivered_late": 0
+    }
+  },
+  "goal": {
+    "user_id": "alice",
+    "request": {
+      "resource_type": "H100",
+      "quantity": 8,
+      "unit": "gpu-hour"
+    },
+    "offered_resources": [
+      {
+        "resource_type": "STORAGE",
+        "quantity": 10,
+        "unit": "TB-day"
+      }
+    ]
+  },
+  "expected_coalition": {
+    "participants": [
+      "alice",
+      "charlie",
+      "bob"
+    ],
+    "transfers": [
+      {
+        "from_user_id": "alice",
+        "to_user_id": "charlie",
+        "resource_type": "STORAGE",
+        "quantity": 10,
+        "unit": "TB-day"
+      },
+      {
+        "from_user_id": "charlie",
+        "to_user_id": "bob",
+        "resource_type": "A100",
+        "quantity": 5,
+        "unit": "gpu-hour"
+      },
+      {
+        "from_user_id": "bob",
+        "to_user_id": "alice",
+        "resource_type": "H100",
+        "quantity": 8,
+        "unit": "gpu-hour"
+      }
+    ]
+  },
+  "events": [
+    {
+      "event_type": "resource_added",
+      "user_id": "bob",
+      "scheduled_at": "2026-09-26T11:15:00+00:00",
+      "resource": {
+        "id": "bob-extra-h100",
+        "resource_type": "H100",
+        "quantity": 4,
+        "unit": "gpu-hour"
+      },
+      "reason": "Additional H100 capacity becomes available."
+    }
+  ],
+  "demo": {
+    "expected_result": "three_party_coalition",
+    "steps": [
+      "Alice asks for 8 H100 GPU-hours.",
+      "AliceAgent discovers Bob as an H100 provider and tries a direct exchange.",
+      "Bob rejects the bilateral terms because STORAGE does not satisfy Bob's A100 need.",
+      "After bilateral fallback, CoalitionAgent searches resource-exchange cycles.",
+      "The cycle Alice -> Charlie -> Bob -> Alice is discovered.",
+      "AliceAgent privately validates giving STORAGE and receiving H100.",
+      "CharlieAgent privately validates giving A100 and receiving STORAGE.",
+      "BobAgent privately validates giving H100 and receiving A100.",
+      "Only public-safe accept/reject verdicts leave the PersonalAgents.",
+      "Alice, Bob and Charlie each approve the coalition as humans.",
+      "After all approvals, execution remains an explicit action.",
+      "All transfers execute atomically: either all commit or every inventory is rolled back.",
+      "Inventories and satisfied needs update together after success."
+    ]
+  }
+}
